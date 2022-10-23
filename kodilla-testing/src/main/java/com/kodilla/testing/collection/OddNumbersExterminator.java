@@ -1,17 +1,14 @@
 package com.kodilla.testing.collection;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class OddNumbersExterminator {
-    public List<Integer> exterminate(List<Integer> numbers){
-        ArrayList<Integer>oddNumbersList = new ArrayList<>();
-
-        for(int number : numbers){
-            if(number%2==0){
-                oddNumbersList.add(number);
+    public ArrayList<Integer> exterminate(ArrayList<Integer> numbers){
+        ArrayList<Integer> evenNumbers = new ArrayList<Integer>();
+        for(int n = 0; n < numbers.size(); n++){
+            if((numbers.get(n)) % 2 == 0){
+                evenNumbers.add(numbers.get(n));
             }
         }
-        return oddNumbersList;
+        return evenNumbers;
     }
 }
