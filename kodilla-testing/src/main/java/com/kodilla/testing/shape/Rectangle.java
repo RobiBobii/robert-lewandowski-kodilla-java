@@ -1,11 +1,11 @@
 package com.kodilla.testing.shape;
 
-public class Circle extends Shape {
+public class Rectangle extends Shape{
     public String getShapeName(){
-        return "Circle";
+        return "Rectangle";
     }
 
     public double getField(){
-        return 10.5;
+        return 5*5;
     }
 }

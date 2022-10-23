@@ -1,9 +1,5 @@
 package com.kodilla.testing.calculator;
 
-import com.kodilla.testing.calculator.Calculator;
-
-import java.util.Objects;
-
 public class TestingMain1 {
 
     public static void main(String[] args) {
