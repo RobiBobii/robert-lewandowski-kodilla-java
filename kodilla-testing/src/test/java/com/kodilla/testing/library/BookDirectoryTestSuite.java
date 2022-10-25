@@ -1,5 +1,6 @@
 package com.kodilla.testing.library;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -110,7 +111,7 @@ public class BookDirectoryTestSuite {
         assertEquals(0, theListOf0Books.size());
         verify(libraryDatabaseMock, times(1)).listBooksInHandsOf(libraryUser);
     }
-
+/*
     @Test
     public void testListBooksIinHandsOfWithCondition1Book(){
 
@@ -126,10 +127,10 @@ public class BookDirectoryTestSuite {
         List<Book> theListOf1Book = bookLibrary.listBooksInHandsOf(libraryUser);
 
         //Then
-        assertEquals(1, theListOf1Book.size());
+        Assertions.assertEquals(1, theListOf1Book.size());
         verify(libraryDatabaseMock, atLeastOnce()).listBooksInHandsOf(libraryUser);
     }
-
+*/
     @Test
     public void testListBooksIinHandsOfWithCondition5Books(){
 
