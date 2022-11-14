@@ -11,14 +11,12 @@ public class ArrayOperationsTestSuite {
     @Test
     public void testGetAverage() {
         //Given
-        int[] list = new int[]{1,2,3,4};
-
+        int numbers [] = {1,9,4,6,3,7,5,5,10,0,3,7,5,5,9,1,2,8,5,5};
+        double averageExpected = 5.0;
         //When
-        double average = ArrayOperations.getAverage(list);
-        double expected = 2.5;
-
+        double average = ArrayOperations.getAverage(numbers);
         //Then
-        assertEquals(expected, average,0.1);
+        assertEquals(averageExpected, average, 0.0001);
     }
 
 }
