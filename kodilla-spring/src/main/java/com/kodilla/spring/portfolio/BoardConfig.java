@@ -2,31 +2,28 @@ package com.kodilla.spring.portfolio;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class BoardConfig {
 
+
     @Bean
-    public Board getBoard() {
-        return new Board(getTaskToDoList(), getTaskInProgressList(), getTaskDoneList());
+    public Board getBoard(TaskList taskToDoList, TaskList taskInProgress, TaskList taskDoneList) {
+        return new Board(taskToDoList, taskInProgress, taskDoneList);
     }
 
-    @Bean(name = "taskToDoList")
-    @Scope("prototype")
-    public TaskList getTaskToDoList() {
+    @Bean
+    public TaskList taskToDoList() {
         return new TaskList();
     }
 
-    @Bean(name = "taskInProgress")
-    @Scope("prototype")
-    public TaskList getTaskInProgressList() {
+    @Bean
+    public TaskList taskInProgress() {
         return new TaskList();
     }
 
-    @Bean(name = "taskDoneList")
-    @Scope("prototype")
-    public TaskList getTaskDoneList() {
+    @Bean
+    public TaskList taskDoneList() {
         return new TaskList();
     }
 }
