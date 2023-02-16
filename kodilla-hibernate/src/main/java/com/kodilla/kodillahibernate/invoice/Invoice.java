@@ -1,10 +1,10 @@
 package com.kodilla.kodillahibernate.invoice;
 
-import jakarta.persistence.*;
+
 import org.hibernate.annotations.NamedNativeQuery;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.data.annotation.Id;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +51,8 @@ public class Invoice {
     }
 
     @OneToMany(
-            cascade = CascadeType.ALL,
+            targetEntity = Item.class,
+            mappedBy = "invoice",
             fetch = FetchType.EAGER
     )
     //@JoinColumn(name = "ID_ITEM")

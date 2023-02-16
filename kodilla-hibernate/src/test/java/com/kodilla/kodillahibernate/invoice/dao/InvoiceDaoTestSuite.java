@@ -3,17 +3,16 @@ package com.kodilla.kodillahibernate.invoice.dao;
 import com.kodilla.kodillahibernate.invoice.Invoice;
 import com.kodilla.kodillahibernate.invoice.Item;
 import com.kodilla.kodillahibernate.invoice.Product;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
+@Transactional
 @SpringBootTest
 public class InvoiceDaoTestSuite {
 
@@ -55,11 +54,11 @@ public class InvoiceDaoTestSuite {
 
         //Then
         try {
-            Assert.assertEquals(1, invoicesList.size());
-            Assert.assertEquals(1, itemsList.size());
-            Assert.assertEquals(2, productsList.size());
-            Assert.assertEquals(true, productsList.contains(product2.getName()));
-            Assert.assertEquals(productName, product.getName());
+            Assertions.assertEquals(1, invoicesList.size());
+            Assertions.assertEquals(1, itemsList.size());
+            Assertions.assertEquals(2, productsList.size());
+            Assertions.assertEquals(true, productsList.contains(product2.getName()));
+            Assertions.assertEquals(productName, product.getName());
 
         } finally {
             //CleanUp

@@ -1,9 +1,10 @@
 package com.kodilla.kodillahibernate.invoice;
 
-import jakarta.persistence.*;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.data.annotation.Id;
 
+import org.jetbrains.annotations.NotNull;
+
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -11,6 +12,9 @@ import java.math.BigDecimal;
 
 public class Item {
     private int id;
+
+    private Invoice invoice;
+
     private Product product;
     private BigDecimal price;
     private int quantity;
@@ -64,10 +68,7 @@ public class Item {
         this.value = value;
     }
 
-    @ManyToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
+    @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
     public Product getProduct() {
         return product;
@@ -77,5 +78,13 @@ public class Item {
         this.product = product;
     }
 
+    @ManyToOne
+    @JoinColumn(name= "INVOICE_ID")
+    public Invoice getInvoice() {
+        return invoice;
+    }
 
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 }

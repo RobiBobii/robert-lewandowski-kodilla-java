@@ -1,18 +1,18 @@
 package com.kodilla.kodillahibernate.task;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Table;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.data.annotation.Id;
 
+import com.kodilla.kodillahibernate.tasklist.TaskList;
+import org.jetbrains.annotations.NotNull;
+
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "TASKS")
 public final class Task {
 
+    private TaskList taskList;
     private int id;
     private String description;
     private Date created;
@@ -65,5 +65,15 @@ public final class Task {
 
     private void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    @ManyToOne
+    @JoinColumn(name= "TASKLIST_ID")
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(TaskList taskList) {
+        this.taskList = taskList;
     }
 }

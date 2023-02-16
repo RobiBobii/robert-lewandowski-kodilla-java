@@ -1,12 +1,10 @@
 package com.kodilla.kodillahibernate.task;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Table;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.data.annotation.Id;
 
+import org.jetbrains.annotations.NotNull;
+
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
