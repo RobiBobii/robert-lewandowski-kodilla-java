@@ -6,8 +6,20 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQuery (
+        name = "Employee.retrieveEmployeeWithName" ,
+        query = "FROM Employee where lastname = :LASTNAME"
+)
+
+@NamedNativeQuery(
+        name = "Employee.retrieveEmployeeNameLike",
+        query = "SELECT * FROM EMPLOYEES" +
+                " WHERE LASTNAME LIKE CONCAT('%',:LASTNAME,'%') ",
+        resultClass = Employee.class
+)
+
 @Entity
-@Table(name = "EMPLOYEES")
+@Table(name="EMPLOYEES")
 public class Employee {
 
     private int id;
@@ -26,10 +38,11 @@ public class Employee {
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "EMPLOYEE_ID", unique = true)
+    @Column(name="EMPLOYEE_ID",unique=true)
     public int getId() {
         return id;
     }
+
 
     @NotNull
     @Column(name = "FIRSTNAME")
@@ -58,7 +71,7 @@ public class Employee {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "JOIN_COMPANY_EMPLOYEE",
-            joinColumns = {@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")},
+            joinColumns = {@JoinColumn (name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "COMPANY_ID", referencedColumnName = "COMPANY_ID")}
     )
     public List<Company> getCompanies() {

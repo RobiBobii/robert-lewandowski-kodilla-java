@@ -17,18 +17,12 @@ import java.util.List;
 public interface TaskDao extends CrudRepository<Task, Integer> {
     List<Task> findByDuration(int duration);
 
-    @Override
-    Task save(Task entity);
+    @Query
+    List<Task> retrieveLongTasks();
 
-//    @Query
-//    List<Task> retrieveLongTasks();
-//
-//    @Query
-//    List<Task> retrieveShortTasks();
-//
-//    @Query(nativeQuery = true)
-//    List<Task> retrieveTasksWithEnoughTime();
-//
-//    @Query
-//    List<Task> retrieveTasksWithDurationLongerThan(@Param("DURATION") int duration);
+    @Query
+    List<Task> retrieveShortTasks();
+
+    @Query(nativeQuery = true)
+    List<Task> retrieveTasksWithEnoughTime();
 }
