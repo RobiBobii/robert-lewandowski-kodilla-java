@@ -5,66 +5,57 @@ import com.kodilla.kodillahibernate.invoice.Item;
 import com.kodilla.kodillahibernate.invoice.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class InvoiceDaoTestSuite {
-
     @Autowired
-    private ProductDao productDao;
-    @Autowired
-    private InoviceDao inoviceDao;
-    @Autowired
-    private ItemDao itemDao;
-    private static final String INVOICE_NUMBER = "2020-20-20-01";
+    InvoiceDao invoiceDao;
 
     @Test
     public void testInvoiceDaoSave() {
-
         //Given
-        Item item = new Item(new BigDecimal(50), 2);
-        Item item2 = new Item(new BigDecimal(150), 1);
+        Invoice invoice = new Invoice("009/11/2017");
 
-        Product product = new Product("Milk");
-        Product product2 = new Product("Beer");
+        Product bread = new Product("bread");
+        Product butter = new Product("butter");
+        Product knife = new Product("knife");
 
-        Invoice invoice = new Invoice(INVOICE_NUMBER);
+        Item itemBread = new Item(bread, new BigDecimal(5), 2);
+        Item itemButter = new Item(butter, new BigDecimal(9), 1);
+        Item itemKnife = new Item(knife, new BigDecimal(250), 1);
 
-        item.setProduct(product);
-        item2.setProduct(product2);
+        itemBread.setInvoice(invoice);
+        itemButter.setInvoice(invoice);
+        itemKnife.setInvoice(invoice);
 
-        invoice.getItems().add(item);
-        invoice.getItems().add(item2);
+        List<Item> items = new ArrayList<>();
+        items.add(itemBread);
+        items.add(itemButter);
+        items.add(itemKnife);
+
+        invoice.setItems(items);
 
         //When
-        inoviceDao.save(invoice);
+        invoiceDao.save(invoice);
+        int invoiceId = invoice.getId();
+        int itemSize = invoice.getItems().size();
 
-        List<Invoice> invoicesList = inoviceDao.retrieveInvoicesByInvoiceNr(INVOICE_NUMBER);
-        List<Item> itemsList = itemDao.findByValue(new BigDecimal(150));
-        List<String> productsList = productDao.retrieveTheProductsFromInvoiceId(INVOICE_NUMBER);
-
-        List<Item> items = invoice.getItems();
-        String productName = items.get(0).getProduct().getName();
+        Invoice invoiceReadFromDB = invoiceDao.findById(invoiceId);
 
         //Then
-        try {
-            Assertions.assertEquals(1, invoicesList.size());
-            Assertions.assertEquals(1, itemsList.size());
-            Assertions.assertEquals(2, productsList.size());
-            Assertions.assertEquals(true, productsList.contains(product2.getName()));
-            Assertions.assertEquals(productName, product.getName());
-
-        } finally {
-            //CleanUp
-            inoviceDao.deleteAll();
-            itemDao.deleteAll();
-            productDao.deleteAll();
-        }
+        Assertions.assertEquals(invoiceId, invoiceReadFromDB.getId());
+        Assertions.assertEquals(3, itemSize);
+        Assertions.assertEquals(itemSize, invoiceReadFromDB.getItems().size());
     }
 }

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+
 @Entity
 @Table(name = "TASKS_FINANCIALS")
 public class TaskFinancialDetails {

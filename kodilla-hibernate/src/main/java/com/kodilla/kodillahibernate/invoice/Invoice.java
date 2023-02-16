@@ -1,19 +1,10 @@
 package com.kodilla.kodillahibernate.invoice;
 
-
-import org.hibernate.annotations.NamedNativeQuery;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-@NamedNativeQuery(
-        name = "Invoice.retrieveInvoicesByInvoiceNr",
-        query = "SELECT * FROM INVOICES" +
-                " WHERE INVOICE_NUMBER = :INVOICE_NR ",
-        resultClass = Invoice.class
-)
 
 @Entity
 @Table(name = "INVOICES")
@@ -22,42 +13,46 @@ public class Invoice {
     private String number;
     private List<Item> items = new ArrayList<>();
 
-    public Invoice() {
+    public Invoice(String number, List<Item> items) {
+        this.number = number;
+        this.items = items;
     }
 
-    public Invoice(String number) {
+    public Invoice (String number){
         this.number = number;
+    }
+
+    public Invoice() {
     }
 
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "INVOICE_ID",unique = true)
+    @Column(name = "ID", unique = true)
     public int getId() {
         return id;
     }
 
-    @Column(name = "INVOICE_NUMBER",unique = true)
+    @Column(name = "NUMBER")
     public String getNumber() {
         return number;
     }
 
-    public void setId(int id) {
+    @OneToMany(targetEntity = Item.class,
+            mappedBy = "invoice",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @Column(name = "ITEM_ID", nullable = false)
+    public List<Item> getItems() {
+        return items;
+    }
+
+    private void setId(int id) {
         this.id = id;
     }
 
-    public void setNumber(String number) {
+    private void setNumber(String number) {
         this.number = number;
-    }
-
-    @OneToMany(
-            targetEntity = Item.class,
-            mappedBy = "invoice",
-            fetch = FetchType.EAGER
-    )
-    //@JoinColumn(name = "ID_ITEM")
-    public List<Item> getItems() {
-        return items;
     }
 
     public void setItems(List<Item> items) {
