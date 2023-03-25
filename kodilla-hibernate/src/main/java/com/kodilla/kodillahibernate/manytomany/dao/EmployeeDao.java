@@ -10,13 +10,13 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 
-@Repository
 @Transactional
+@Repository
 public interface EmployeeDao extends CrudRepository<Employee, Integer> {
-    @Query
-    List<Employee> retrieveEmployeeWithName(@Param("LASTNAME") String lastname);
 
     @Query
-    List<Employee> retrieveEmployeeNameLike(@Param("LASTNAME") String lastName);
+    List<Employee> retrieveEmployeesByNameFragment(@Param("FRAGMENT") String fragment);
 
+    @Query
+    List<Employee> retrieveEmployeesByLastname(@Param("LASTNAME") String lastname);
 }

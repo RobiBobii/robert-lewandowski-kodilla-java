@@ -7,23 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@NamedQuery(
+        name= "Company.retrieveCompaniesByNameFragment",
+        query = "FROM Company WHERE name LIKE :FRAGMENT"
+)
 @NamedNativeQuery(
-        name = "Company.retrieveCompaniesWithNameStarting",
+        name = "Company.retrieveCompaniesByFirstThreeCharactersOfName",
         query = "SELECT * FROM COMPANIES" +
-                " WHERE SUBSTRING(COMPANY_NAME, 1, 3) = :COMPANY_THREE_LETTERS",
+                " WHERE SUBSTRING(COMPANY_NAME, 1, 3) = :NAME",
         resultClass = Company.class
 )
-
-@NamedNativeQuery(
-        name = "Company.retrieveCompaniesNameLike",
-        query = "SELECT * FROM COMPANIES" +
-                " WHERE COMPANY_NAME LIKE CONCAT('%',:COMPANY_NAME,'%') ",
-        resultClass = Company.class
-)
-
-
 @Entity
-@Table(name="COMPANIES")
+@Table(name = "COMPANIES")
 public class Company {
 
     private int id;
@@ -40,15 +35,20 @@ public class Company {
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name="COMPANY_ID",unique=true)
+    @Column(name = "COMPANY_ID", unique = true)
     public int getId() {
         return id;
     }
 
     @NotNull
-    @Column(name="COMPANY_NAME")
+    @Column(name = "COMPANY_NAME")
     public String getName() {
         return name;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "companies")
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
     private void setId(int id) {
@@ -57,12 +57,6 @@ public class Company {
 
     private void setName(String name) {
         this.name = name;
-    }
-
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "companies")
-    public List<Employee> getEmployees() {
-        return employees;
     }
 
     public void setEmployees(List<Employee> employees) {
